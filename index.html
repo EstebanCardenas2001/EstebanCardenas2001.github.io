@@ -26,11 +26,11 @@
             padding: 0;
         }
         .background-video {
-            position: fixed;
+            position: relative;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             object-fit: cover;
             z-index: -1;
             opacity: 0.3;
@@ -40,8 +40,8 @@
         
         /* This is your original centered pane */
         .glass-pane {
-            position: absolute;
-            top: 20%;
+            position: fixed;
+            top: 15%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 900px;
@@ -55,9 +55,9 @@
 
         /* --- ADDED THIS FOR THE NEW PANE --- */
         .glass-pane-left {
-            position: absolute;
-            top: 40%;  /* Position it lower on the page */
-            left: 17%; /* Align it 10% from the left */
+            position: sticky;
+            top: 30%;  /* Position it lower on the page */
+            left: 40%; /* Align it 10% from the left */
             transform: translateY(-50%); /* Vertically center it */
             
             width: 250px;  /* You can change this */
@@ -75,7 +75,7 @@
 
         /* --- 3. Glass Content Style --- */
         .glass-content {
-            position: relative;
+            position: fixed;
             z-index: 3;
             color: white;
             text-align: center;
@@ -100,9 +100,10 @@
 
         /* --- 4. Main Page Content Style --- */
         .my-custom-text {
+			
             color: white;
-            text-align: center;
-            padding-top: 190px;
+            text-align: left;
+            padding-top: 80px;
             padding-bottom: 3em;
         }
 
@@ -111,6 +112,7 @@
         }
 
         .my-custom-text p {
+
             color: rgba(255, 255, 255, 0.75);
             font-size: 1.1em;
             line-height: 1.6;
@@ -138,98 +140,65 @@
     <div class="my-custom-text">
     <div class="glass-pane-left glass-effect">
         <div class="glass-content">
-            <h2 style="font-size: 40px;">About Me</h2>
+            <h2 style="font-size: 30px;">About Me</h2>
         </div>
     </div>
         <p>
             This is the text you wanted to add...
-        </p>
-        <p>
-            Here is another paragraph. As you add more text,
-            the page will get taller and taller.
-        </p>
-        <p>
-            Once the total height of all this text is greater
-            than the height of your screen, the scrollbar
-            will appear.
-        </p>
-        <p>
-            Once the total height of all this text is greater
-            than the height of your screen, the scrollbar
-            will appear.
-        </p>
-        <p>
-            Once the total height of all this text is greater
-            than the height of your screen, the scrollbar
-            will appear.
-        </p>
-        <p>
-            Once the total height of all this text is greater
-            than the height of your screen, the scrollbar
-            will appear.
-        </p>
-        <p>
-            Once the total height of all this text is greater
-            than the height of your screen, the scrollbar
-            will appear.
-        </p>
-        <p>
-            Once the total height of all this text is greater
-            than the height of your screen, the scrollbar
-            will appear.
-        </p>
-        <p>
-            Once the total height of all this text is greater
-            than the height of your screen, the scrollbar
-            will appear.
-        </p>
-		        </p>
-        <p>
-            Once the total height of all this text is greater
-            than the height of your screen, the scrollbar
-            will appear.
-        </p>
-        <p>
-            Once the total height of all this text is greater
-            than the height of your screen, the scrollbar
-            will appear.
-        </p>
-        <p>
-            Once the total height of all this text is greater
-            than the height of your screen, the scrollbar
-            will appear.
-        </p>
-		        </p>
-        <p>
-            Once the total height of all this text is greater
-            than the height of your screen, the scrollbar
-            will appear.
-        </p>
-        <p>
-            Once the total height of all this text is greater
-            than the height of your screen, the scrollbar
-            will appear.
-        </p>
-        <p>
-            Once the total height of all this text is greater
-            than the height of your screen, the scrollbar
-            will appear.
-        </p>
-		        </p>
-        <p>
-            Once the total height of all this text is greater
-            than the height of your screen, the scrollbar
-            will appear.
-        </p>
-        <p>
-            Once the total height of all this text is greater
-            than the height of your screen, the scrollbar
-            will appear.
-        </p>
-        <p>
-            Once the total height of all this text is greater
-            than the height of your screen, the scrollbar
-            will appear.
+			This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+			This is the text you wanted to add...
+			This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+            This is the text you wanted to add...
+			This is the text you wanted to add...
+
         </p>
     </div>
 
@@ -245,14 +214,14 @@
                     // CHANGED: This now targets BOTH panes
                     target: ".glass-effect", 
                     snapshot: "body",
-                    frost: 3,
+                    frost: 1.5,
                     bevelDepth: 0.2,
                     bevelWidth: 0.2,
                     specular: true,
                     shadow: true,
                     tilt: false,
                     tiltFactor: 5,
-                    magnify: 1
+                    magnify: 1.5
                 });
             } catch (e) {
                 console.error("liquidGL Error:", e);
