@@ -26,32 +26,52 @@
             padding: 0;
         }
         .background-video {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            object-fit: cover; /* Covers the screen without stretching */
-            z-index: -1;       /* Puts it behind everything else */
-            opacity: 0.3;      /* Optional: Makes it dimmer */
+            height: 100vh;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.3;
         }
 
-        /* --- 2. Glass Pane Style --- */
-		.glass-pane {
-				position: fixed;
-				top: 20%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				width: 900px;
-				height: 130px;
-				z-index: 99;
-				border-radius: 30px;
+        /* --- 2. Glass Pane Styles --- */
+        
+        /* This is your original centered pane */
+        .glass-pane {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 900px;
+            height: 130px;
+            z-index: 99;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-				/* --- ADD THESE 3 LINES --- */
-				display: flex;
-				align-items: center;     /* This centers the text vertically */
-				justify-content: center; /* This centers the text horizontally */
-			}
+        /* --- ADDED THIS FOR THE NEW PANE --- */
+        .glass-pane-left {
+            position: absolute;
+            top: 40%;  /* Position it lower on the page */
+            left: 17%; /* Align it 10% from the left */
+            transform: translateY(-50%); /* Vertically center it */
+            
+            width: 250px;  /* You can change this */
+            height: 50px; /* You can change this */
+            
+            z-index: 99;
+            border-radius: 30px;
+
+            /* These lines center the text inside */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
 
         /* --- 3. Glass Content Style --- */
         .glass-content {
@@ -67,22 +87,22 @@
             font-size: 70px;
             color: #FFFFFF;
             font-weight: 700;
-			margin: 0;        
-		}
+            margin: 0;        
+        }
 
         .glass-content p {
             font-size: 16px;
             color: #E0E0E0;
             font-weight: 300;
-            line-height: 1.5; /* <-- CORRECTED FROM 0 */
+            line-height: 1.5;
+            margin: 0; /* Added this to be safe */
         }
 
         /* --- 4. Main Page Content Style --- */
-        /* This is for the scrolling text */
         .my-custom-text {
             color: white;
             text-align: center;
-            padding-top: 300px; /* Pushes content down from under the pane */
+            padding-top: 190px;
             padding-bottom: 3em;
         }
 
@@ -99,18 +119,28 @@
         }
     </style>
 </head>
-<body> <video class="background-video" autoplay loop muted playsinline>
+<body>
+    
+    <video class="background-video" autoplay loop muted playsinline>
         <source src="images/background-video.mp4" type="video/mp4">
     </video>
     
-    <div class="glass-pane">
+    <div class="glass-pane glass-effect">
         <div class="glass-content">
             <h2>Esteban Cardenas A.</h2>
+            <p>Master's student at University of Padova</p>
         </div>
     </div>
 
+
+
+
     <div class="my-custom-text">
-        <h2>About Me</h2>
+    <div class="glass-pane-left glass-effect">
+        <div class="glass-content">
+            <h2 style="font-size: 40px;">About Me</h2>
+        </div>
+    </div>
         <p>
             This is the text you wanted to add...
         </p>
@@ -142,7 +172,55 @@
             Once the total height of all this text is greater
             than the height of your screen, the scrollbar
             will appear.
-        </all>
+        </p>
+        <p>
+            Once the total height of all this text is greater
+            than the height of your screen, the scrollbar
+            will appear.
+        </p>
+        <p>
+            Once the total height of all this text is greater
+            than the height of your screen, the scrollbar
+            will appear.
+        </p>
+		        </p>
+        <p>
+            Once the total height of all this text is greater
+            than the height of your screen, the scrollbar
+            will appear.
+        </p>
+        <p>
+            Once the total height of all this text is greater
+            than the height of your screen, the scrollbar
+            will appear.
+        </p>
+        <p>
+            Once the total height of all this text is greater
+            than the height of your screen, the scrollbar
+            will appear.
+        </p>
+		        </p>
+        <p>
+            Once the total height of all this text is greater
+            than the height of your screen, the scrollbar
+            will appear.
+        </p>
+        <p>
+            Once the total height of all this text is greater
+            than the height of your screen, the scrollbar
+            will appear.
+        </p>
+        <p>
+            Once the total height of all this text is greater
+            than the height of your screen, the scrollbar
+            will appear.
+        </p>
+		        </p>
+        <p>
+            Once the total height of all this text is greater
+            than the height of your screen, the scrollbar
+            will appear.
+        </p>
         <p>
             Once the total height of all this text is greater
             than the height of your screen, the scrollbar
@@ -164,16 +242,17 @@
         document.addEventListener("DOMContentLoaded", () => {
             try {
                 const glassEffect = liquidGL({
-                    target: ".glass-pane",
+                    // CHANGED: This now targets BOTH panes
+                    target: ".glass-effect", 
                     snapshot: "body",
-                    frost: 1,
-                    bevelDepth: 0.08,
-                    bevelWidth: 0.15,
+                    frost: 3,
+                    bevelDepth: 0.2,
+                    bevelWidth: 0.2,
                     specular: true,
                     shadow: true,
                     tilt: false,
                     tiltFactor: 5,
-                    magnify: 1.1
+                    magnify: 1
                 });
             } catch (e) {
                 console.error("liquidGL Error:", e);
