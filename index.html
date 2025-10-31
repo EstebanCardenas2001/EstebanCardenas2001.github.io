@@ -81,17 +81,28 @@
         }
 
         /* --- 4. Main Page Content Style --- */
+        /* --- 4. Main Page Content Style --- */
+/* --- 4. Main Page Content Style --- */
         .my-custom-text {
             color: white;
             text-align: left;
             padding-top: 80px;
             padding-bottom: 3em;
+            /* ▼▼▼ ADDED/MODIFIED THESE LINES ▼▼▼ */
+            max-width: 40em; /* Set a max width for the entire scrolling text block */
+            margin: 0 auto; /* Center the block horizontally */
+            padding-left: 20px; /* Add padding for smaller screens */
+            padding-right: 20px; /* Add padding for smaller screens */
+            /* ▲▲▲ END ADDED/MODIFIED LINES ▲▲▲ */
         }
 
+        /* You can remove the max-width from the h2 now, or just leave it for minor control */
         .my-custom-text h2 {
             font-size: 2.5em;
+            /* You had this previously, which is fine: max-width: 40em; */
         }
 
+        /* This is where you already had a max-width, now it will be contained within the main block */
         .my-custom-text p {
             color: rgba(255, 255, 255, 0.75);
             font-size: 1.1em;
@@ -146,6 +157,45 @@
             height: 20px;
             margin-right: 10px;
         }
+        /* --- 7. CV Alignment Styles (New Section) --- */
+        .cv-item {
+            display: flex; /* Enables flexible alignment */
+            justify-content: space-between; /* Pushes content to the far left and far right */
+            width: 100%; /* Ensure the element uses the full available width */
+            margin-bottom: 5px; /* Add slight spacing between items */
+        }
+
+        /* Optional: Style for the dates to make them stand out or align better */
+        .cv-date {
+            /* Ensures the date text doesn't wrap */
+            white-space: nowrap; 
+            /* Optional: Make the date slightly less prominent */
+            opacity: 0.8; 
+        }
+        /* --- 8. PUBLICATIONS LIST STYLE --- */
+        .publications-list {
+            /* 1. Remove default left-side padding (the main culprit) */
+            padding-left: 0px; 
+
+            /* 2. Choose how the bullet point is positioned:
+                'inside' pulls the dot in line with the text block.
+                'outside' (default) pushes the dot out. */
+            list-style-position: inside;
+            
+            /* 3. Optional: Remove the default list margin for better spacing control */
+            margin: 0;
+        }
+
+        /* Ensure the list items still have the desired color and spacing */
+        .publications-list li {
+            color: rgba(255, 255, 255, 0.75); 
+            line-height: 1.6;
+            margin-bottom: 15px; 
+            text-align: justify;
+            /* This will slightly indent the text under the bullet point for better readability */
+            padding-left: 10px; 
+            text-indent: -20px;
+        }
     </style>
 </head>
 <body>
@@ -176,29 +226,70 @@
                 <h2 style="font-size: 30px;">About Me</h2>
             </div>
         </div>
-        <p>
-            aaaaaaaaThis is the text you wanted to add...
-            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
-            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
-            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
-            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
-            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
-            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
-            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
-            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
-            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
-            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
-            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
-            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
-            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
-            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
-            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
-            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
-            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
-            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
-            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
-            ... (Your scrolling text content is here) ...
+        
+        <div class="education-section" style="max-width: 40em; margin: 0 auto; margin-top: 50px;">
+        <h2 style="font-size: 2em; margin-bottom: 20px;">Education</h2>
+        
+        <p class="cv-item">
+            <span>University of Padova - Master's in Physics of Data</span>
+            <span class="cv-date">Oct 2025 - Present</span>
         </p>
+
+        <p class="cv-item">
+            <span>Escuela Politecnica Nacional - Bachelor's in Physics</span>
+            <span class="cv-date">June 2020 - Dec 2024</span>
+        </p>
+        </div>
+                <div class="research-experience" style="max-width: 40em; margin: 0 auto; margin-top: 50px;">
+        <h2 style="font-size: 2em; margin-bottom: 20px;">Research Experience</h2>
+        
+        <p class="cv-item">
+            <span>Condensed Matter Laboratory Internship <br> Escuela Politecnica Nacional</span>
+            <span class="cv-date">October 2022 - March 2023</span>
+        </p>
+        <br>
+        <p class="cv-item">
+            <span>Internship with J. Quirola <br> Radbound University Postdoctoral researcher </span>
+            <span class="cv-date">March 2024 - June 2024</span>
+        </p>
+                <br>
+        <p class="cv-item">
+            <span>Summer School in Statistics for Astronomers  <br> Center for Astrostatistics at Pensilvania State University </span>
+            <span class="cv-date">June 2024</span>
+        </p>
+                <br>
+        <p class="cv-item">
+            <span>Temporal estimators of peculiar GRBs  <br> Escuela Politecnica Nacional </span>
+            <span class="cv-date">November 2023 - Present</span>
+        </p>
+        </div>
+                <div class="publications" style="max-width: 40em; margin: 0 auto; margin-top: 50px;">
+    <h2 style="font-size: 2em; margin-bottom: 20px;">Publications and Presentations</h2>
+    
+    <ul class="publications-list">
+        <li>Noriega, N., Cárdenas, E. F., Chacón, J. A., Vásquez, N. (2024). Temporal Estimators of Peculiar GRBs. In Journal of Physics: Conference Series (Vol. 2796, Issue 1, p. 012001). IOP Publishing. https://doi.org/10.1088/1742-6596/2796/1/012001</li>
+
+        <li>Poster presentation at the Physics meeting EPN, Quito, Temporal estimators of peculiar GRBs -- Nicolas A. Noriega, Esteban F. Cardenas, October 2023</li>
+
+        <li>Poster presentation at the XXXII IAU General Assembly, Cape Town, Unveiling the Enigmatic Nature of Peculiar Long GRBs in Swift’s Third Catalog -- Esteban F. Cardenas, August 2024 </li>
+
+        <li>Second place at best poster Poster presentation at the CIF (International congress of physics) ESPOCH, Riobamba, Unveiling the Enigmatic Nature of Peculiar Long GRBs in Swift’s Third Catalog -- Esteban F. Cardenas, October 2024</li>
+
+        <li>Poster presentation at the ninth Colombian Meeting on High Energy Physics (9th ComHEP), Unveiling the Enigmatic Nature of Peculiar Long GRBs in Swift’s Third Catalog -- Esteban F. Cardenas, December 2024</li>
+    </ul>
+        </div>
+        <div class="activities" style="max-width: 40em; margin: 0 auto; margin-top: 50px;">
+            <h2 style="font-size: 2em; margin-bottom: 20px;">Extracurricular Activities</h2>
+            
+            <ul class="publications-list">
+                <li>Third place winner at Dorothy coding challenge (ICTP)</li>
+                <li>President of the association of physics students at Escuela Politecnica Nacional, January 2024 - January 2025</li>
+                <li>Member of the organization committee of the Physics meeting at Escuela Politecnica Nacional</li>
+                <li>Member of the organization committee of the IV workshop Astronomia en los Andes</li>
+                <li>Active member of the OPTICA student chapter</li>
+                <li>Second place at the IAPS PLANCKS national preliminaries</li>
+            </ul>
+        </div>
     </div>
 
     
