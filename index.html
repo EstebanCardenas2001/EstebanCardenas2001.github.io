@@ -8,37 +8,24 @@
     <style>
         /* --- 1. Background Style --- */
         body {
-            /* Using a dark blue solid color */
             background-color: #000000;
-
-            /* Uncomment this block to use an image instead */
-            /*
-            background-image: url('images/my_background.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            */
-
-            /* Basic font styling for the whole page */
             font-family: sans-serif;
             color: white;
             margin: 0;
             padding: 0;
         }
         .background-video {
-            position: relative;
+            position: static; 
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 100vh;   /* Ensures it takes up the full screen height */
             object-fit: cover;
             z-index: -1;
             opacity: 0.3;
         }
 
         /* --- 2. Glass Pane Styles --- */
-        
-        /* This is your original centered pane */
         .glass-pane {
             position: fixed;
             top: 15%;
@@ -53,20 +40,15 @@
             justify-content: center;
         }
 
-        /* --- ADDED THIS FOR THE NEW PANE --- */
         .glass-pane-left {
             position: sticky;
-            top: 30%;  /* Position it lower on the page */
-            left: 40%; /* Align it 10% from the left */
-            transform: translateY(-50%); /* Vertically center it */
-            
-            width: 250px;  /* You can change this */
-            height: 50px; /* You can change this */
-            
+            top: 30%;
+            left: 40%;
+            transform: translateY(-50%);
+            width: 250px;
+            height: 50px;
             z-index: 99;
             border-radius: 30px;
-
-            /* These lines center the text inside */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -95,12 +77,11 @@
             color: #E0E0E0;
             font-weight: 300;
             line-height: 1.5;
-            margin: 0; /* Added this to be safe */
+            margin: 0;
         }
 
         /* --- 4. Main Page Content Style --- */
         .my-custom-text {
-			
             color: white;
             text-align: left;
             padding-top: 80px;
@@ -112,12 +93,58 @@
         }
 
         .my-custom-text p {
-
             color: rgba(255, 255, 255, 0.75);
             font-size: 1.1em;
             line-height: 1.6;
             margin: 0 auto;
             max-width: 40em;
+        }
+        
+        /* --- 5. TEXT OVER VIDEO (NEW INTRO TEXT) --- */
+        .text-over-video {
+            position: absolute; 
+            top: 55%;           
+            left: 50%;          
+            transform: translate(-50%, -50%);
+            z-index: 10;        
+            color: white;
+            text-align: justify;
+            max-width: 80%; /* Added to keep text contained */
+        }
+        .text-over-video h2 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+        .text-over-video p {
+            font-size: 1.2em;
+            line-height: 1.4;
+        }
+
+        /* --- 6. GITHUB BUTTON STYLE --- */
+        .github-button {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            background-color: #333;
+            border: 2px solid #555;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-top: 25px;
+            transition: background-color 0.3s, transform 0.1s;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .github-button:hover {
+            background-color: #555;
+            transform: translateY(-2px);
+        }
+
+        .github-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -127,77 +154,50 @@
         <source src="images/background-video.mp4" type="video/mp4">
     </video>
     
+    <div class="text-over-video">
+        <h2>Physicist, Data Scientist.</h2>
+        <p>I am currently expanding my capabilities as a physicist and data scientist through the Master's program in Physics of Data at the University of Padova. My core expertise lies in translating complex systems into robust, statistically-sound models, moving beyond simple data fitting to build predictive architectures grounded in physical principles. I focus on bridging the gap between fundamental physics and machine learning to extract deep, actionable insights from challenging datasets in a quest to understand and simulate the world around us.</p>
+
+        <a href="https://github.com/EstebanCardenas2001" target="_blank" class="github-button">
+            <svg class="github-icon" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" fill="white" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2s.15.46.55.38c3.18-1.06 5.47-4.05 5.47-7.59C16 3.58 12.42 0 8 0z"></path></svg>
+            View My GitHub
+        </a>
+    </div>
     <div class="glass-pane glass-effect">
         <div class="glass-content">
             <h2>Esteban Cardenas A.</h2>
             <p>Master's student at University of Padova</p>
         </div>
     </div>
-
-
-
-
+        
     <div class="my-custom-text">
-    <div class="glass-pane-left glass-effect">
-        <div class="glass-content">
-            <h2 style="font-size: 30px;">About Me</h2>
+        <div class="glass-pane-left glass-effect">
+            <div class="glass-content">
+                <h2 style="font-size: 30px;">About Me</h2>
+            </div>
         </div>
-    </div>
         <p>
             aaaaaaaaThis is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-			This is the text you wanted to add...
-			This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-            This is the text you wanted to add...
-			This is the text you wanted to add...
-
+            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
+            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
+            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
+            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
+            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
+            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
+            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
+            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
+            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
+            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
+            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
+            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
+            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
+            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
+            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
+            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
+            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
+            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
+            ... (Your scrolling text content is here) ...            aaaaaaaaThis is the text you wanted to add...
+            ... (Your scrolling text content is here) ...
         </p>
     </div>
 
@@ -210,13 +210,12 @@
         document.addEventListener("DOMContentLoaded", () => {
             try {
                 const glassEffect = liquidGL({
-                    // CHANGED: This now targets BOTH panes
                     target: ".glass-effect", 
                     snapshot: "body",
                     frost: 1.5,
                     bevelDepth: 0.2,
                     bevelWidth: 0.2,
-                    specular: true,
+                    specular: false,
                     shadow: true,
                     tilt: false,
                     tiltFactor: 5,
