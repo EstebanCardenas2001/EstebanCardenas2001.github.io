@@ -1,153 +1,185 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<title>Massively by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esteban Cardenas - Portfolio</title>
 
-		<style>
-			.glass-pane {
-				/* This makes the panel "float" over the page */
-				position: fixed; 
-				
-				/* These three lines center it on the screen */
+    <style>
+        /* --- 1. Background Style --- */
+        body {
+            /* Using a dark blue solid color */
+            background-color: #000000;
+
+            /* Uncomment this block to use an image instead */
+            /*
+            background-image: url('images/my_background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            */
+
+            /* Basic font styling for the whole page */
+            font-family: sans-serif;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Covers the screen without stretching */
+            z-index: -1;       /* Puts it behind everything else */
+            opacity: 0.3;      /* Optional: Makes it dimmer */
+        }
+
+        /* --- 2. Glass Pane Style --- */
+		.glass-pane {
+				position: fixed;
 				top: 20%;
 				left: 50%;
-				transform: translate(-50%, -50%); 
-				
+				transform: translate(-50%, -50%);
 				width: 900px;
-				height: 70px;
-				z-index: 99; /* Sits on top of everything */
-				border-radius: 50px;
+				height: 130px;
+				z-index: 99;
+				border-radius: 30px;
+
+				/* --- ADD THESE 3 LINES --- */
+				display: flex;
+				align-items: center;     /* This centers the text vertically */
+				justify-content: center; /* This centers the text horizontally */
 			}
 
-			.glass-content {
-				position: relative; 
-				z-index: 3;       /* Sits ON TOP of the glass effect */
-				color: white;     
-				text-align: center;
-				padding: 0px;
-				user-select: none; 
-			}
-			.glass-content h2 {
-				/* This targets "My Floating Panel" */
-				font-size: 50px;  /* Change this value */
-				color: #FFFFFF;   /* Change this value */
-				font-weight: 700; /* Makes it bold */
-			}
+        /* --- 3. Glass Content Style --- */
+        .glass-content {
+            position: relative;
+            z-index: 3;
+            color: white;
+            text-align: center;
+            padding: 0px;
+            user-select: none;
+        }
 
-			.glass-content p {
-				/* This targets the paragraph text */
-				font-size: 26px;     /* Change this value */
-				color: #E0E0E0;      /* A slightly dimmer white */
-				font-weight: 300;    /* Makes it thinner */
-				line-height: 1.5;    /* Adds some spacing between lines */
-			}
-#main {
-        background-color: transparent !important;
-    }
+        .glass-content h2 {
+            font-size: 70px;
+            color: #FFFFFF;
+            font-weight: 700;
+			margin: 0;        
+		}
 
-    /* --- END OF FIX --- */
+        .glass-content p {
+            font-size: 16px;
+            color: #E0E0E0;
+            font-weight: 300;
+            line-height: 1.5; /* <-- CORRECTED FROM 0 */
+        }
 
+        /* --- 4. Main Page Content Style --- */
+        /* This is for the scrolling text */
+        .my-custom-text {
+            color: white;
+            text-align: center;
+            padding-top: 300px; /* Pushes content down from under the pane */
+            padding-bottom: 3em;
+        }
 
-    /* This is your custom text style from before (it's good) */
-    .my-custom-text {
-        color: white; 
-        text-align: center; 
-        margin-bottom: 3em; 
-    }
+        .my-custom-text h2 {
+            font-size: 2.5em;
+        }
 
-    .my-custom-text h2 {
-        color: white; 
-        font-size: 2.5em; 
-    }
-
-    .my-custom-text p {
-        color: rgba(255, 255, 255, 0.75); 
-        font-size: 1.1em;
-        line-height: 1.6;
-        margin: 0 auto; 
-        max-width: 40em; 
-    }
-	
-		</style>
-		</head>
-	<body class="is-preload">
-
-		<div id="wrapper" class="fade-in">
-
-		<div id="main">
-
-		</div>
-
-				<header id="header">
-					
-					</header>
-
-
-<div id="main">
-
-    <section class="my-custom-text">
-        <h2>About Me</h2>
-        <p>
-            This is the text you wanted to add to the main body of the page.
-            It will scroll normally, and the glass pane will float over it.
-            You can add more paragraphs here. This content is inside the 
-            section, so it's part of the scrolling page.
-        </p>
-    </section>
+        .my-custom-text p {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin: 0 auto;
+            max-width: 40em;
+        }
+    </style>
+</head>
+<body> <video class="background-video" autoplay loop muted playsinline>
+        <source src="images/background-video.mp4" type="video/mp4">
+    </video>
+    
+    <div class="glass-pane">
+        <div class="glass-content">
+            <h2>Esteban Cardenas A.</h2>
+        </div>
     </div>
 
-				<footer id="footer">
-						</footer>
+    <div class="my-custom-text">
+        <h2>About Me</h2>
+        <p>
+            This is the text you wanted to add...
+        </p>
+        <p>
+            Here is another paragraph. As you add more text,
+            the page will get taller and taller.
+        </p>
+        <p>
+            Once the total height of all this text is greater
+            than the height of your screen, the scrollbar
+            will appear.
+        </p>
+        <p>
+            Once the total height of all this text is greater
+            than the height of your screen, the scrollbar
+            will appear.
+        </p>
+        <p>
+            Once the total height of all this text is greater
+            than the height of your screen, the scrollbar
+            will appear.
+        </p>
+        <p>
+            Once the total height of all this text is greater
+            than the height of your screen, the scrollbar
+            will appear.
+        </p>
+        <p>
+            Once the total height of all this text is greater
+            than the height of your screen, the scrollbar
+            will appear.
+        </all>
+        <p>
+            Once the total height of all this text is greater
+            than the height of your screen, the scrollbar
+            will appear.
+        </p>
+        <p>
+            Once the total height of all this text is greater
+            than the height of your screen, the scrollbar
+            will appear.
+        </p>
+    </div>
 
-				<div id="copyright">
-						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
-					</div>
+    
+    <script src="assets/js/html2canvas.min.js" defer></script>
+    
+    <script src="assets/js/liquidGL.js" defer></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            try {
+                const glassEffect = liquidGL({
+                    target: ".glass-pane",
+                    snapshot: "body",
+                    frost: 1,
+                    bevelDepth: 0.08,
+                    bevelWidth: 0.15,
+                    specular: true,
+                    shadow: true,
+                    tilt: false,
+                    tiltFactor: 5,
+                    magnify: 1.1
+                });
+            } catch (e) {
+                console.error("liquidGL Error:", e);
+            }
+        });
+    </script>
 
-			</div> <div class="glass-pane">
-			
-			<div class="glass-content">
-				<h2>Esteban Cardenas A.</h2>
-				<p>Master's student at University of Padova</p>
-			</div>
-
-		</div>
-		<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assetsMusic.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
-			<script src="assets/js/html2canvas.min.js" defer></script>
-			
-			<script src="assets/js/liquidGL.js" defer></script>
-			
-			<script>
-				document.addEventListener("DOMContentLoaded", () => {
-					try {
-						const glassEffect = liquidGL({
-							target: ".glass-pane", // CSS selector for the pane
-							snapshot: "body",    // Refracts the whole page
-							
-							// --- Optional Style Settings ---
-							frost: 1,
-							bevelDepth: 0.08,
-							bevelWidth: 0.15,
-							specular: true,
-							shadow: true,
-							tilt: false,
-							tiltFactor: 5,
-							magnify: 1.1
-						});
-					} catch (e) {
-						console.error("liquidGL Error:", e);
-					}
-				});
-			</script>
-			</body>
+</body>
 </html>
