@@ -10,15 +10,15 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/liquidgl@1.0.0/dist/liquidGL.css">
 		<style>
 			.liquid-container {
-				width: 90%;      /* Set a width */
-				max-width: 600px;  /* Set a max width */
-				height: 400px;     /* Set a height */
-				margin: 2em auto;  /* Center it on the page */
+				width: 90%;
+				max-width: 600px;
+				height: 400px;
+				margin: 2em auto;
 				cursor: pointer;
 				border-radius: 10px;
 				overflow: hidden;
-				border: 3px solid #fff; /* Optional: adds a nice border */
-				box-shadow: 0 5px 15px rgba(0,0,0,0.2); /* Optional: adds a shadow */
+				border: 3px solid #fff;
+				box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 			}
 		</style>
 		</head>
@@ -220,7 +220,7 @@
 			</div>
 
 		<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assetsjs/jquery.scrollex.min.js"></script>
 			<script src="assets/js/jquery.scrolly.min.js"></script>
 			<script src="assets/js/browser.min.js"></script>
 			<script src="assets/js/breakpoints.min.js"></script>
@@ -231,15 +231,20 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
 			<script src="https://cdn.jsdelivr.net/npm/liquidgl@1.0.0/dist/liquidGL.min.js"></script>
 			<script>
-				document.addEventListener("DOMContentLoaded", function() {
-					// Find the container we just added
-					const container = document.querySelector('.liquid-container');
-					
-					// Create the effect on that container
-					new liquidGL(container, {
-						// This texture is REQUIRED.
-						texture: 'https://raw.githubusercontent.com/naughtyduk/liquidGL/main/images/displace.png'
-					});
+				// This waits for the *entire window* (images included) to load.
+				window.addEventListener("load", function() {
+					try {
+						// Find the container we just added
+						const container = document.querySelector('.liquid-container');
+						
+						// Create the effect on that container
+						new liquidGL(container, {
+							// This texture is REQUIRED.
+							texture: 'https://raw.githubusercontent.com/naughtyduk/liquidGL/main/images/displace.png'
+						});
+					} catch (e) {
+						console.error("LiquidGL Error:", e);
+					}
 				});
 			</script>
 			</body>
