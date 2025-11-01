@@ -19,19 +19,20 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100vh;   /* Ensures it takes up the full screen height */
+            height: 100vh;
             object-fit: cover;
             z-index: -1;
             opacity: 0.3;
         }
 
-        /* --- 2. Glass Pane Styles --- */
+        /* --- 2. Glass Pane Styles (Made Fluid) --- */
         .glass-pane {
             position: fixed;
             top: 15%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 900px;
+            width: 80%; /* Fluid width */
+            max-width: 900px; /* Maximum desktop size */
             height: 130px;
             z-index: 99;
             border-radius: 30px;
@@ -55,7 +56,7 @@
         }
 
 
-        /* --- 3. Glass Content Style --- */
+        /* --- 3. Glass Content Style (Made Fluid) --- */
         .glass-content {
             position: fixed;
             z-index: 3;
@@ -66,7 +67,9 @@
         }
 
         .glass-content h2 {
-            font-size: 70px;
+            /* Fluid font size for header, maxed at 70px */
+            font-size: 5vw; 
+            max-font-size: 70px;
             color: #FFFFFF;
             font-weight: 700;
             margin: 0;        
@@ -81,28 +84,21 @@
         }
 
         /* --- 4. Main Page Content Style --- */
-        /* --- 4. Main Page Content Style --- */
-/* --- 4. Main Page Content Style --- */
         .my-custom-text {
             color: white;
             text-align: left;
-            padding-top: 80px;
+            padding-top: 100px;
             padding-bottom: 3em;
-            /* ▼▼▼ ADDED/MODIFIED THESE LINES ▼▼▼ */
-            max-width: 40em; /* Set a max width for the entire scrolling text block */
-            margin: 0 auto; /* Center the block horizontally */
-            padding-left: 20px; /* Add padding for smaller screens */
-            padding-right: 20px; /* Add padding for smaller screens */
-            /* ▲▲▲ END ADDED/MODIFIED LINES ▲▲▲ */
+            max-width: 60em; 
+            margin: 0 auto;
+            padding-left: 20px; 
+            padding-right: 20px;
         }
 
-        /* You can remove the max-width from the h2 now, or just leave it for minor control */
         .my-custom-text h2 {
             font-size: 2.5em;
-            /* You had this previously, which is fine: max-width: 40em; */
         }
 
-        /* This is where you already had a max-width, now it will be contained within the main block */
         .my-custom-text p {
             color: rgba(255, 255, 255, 0.75);
             font-size: 1.1em;
@@ -111,7 +107,7 @@
             max-width: 40em;
         }
         
-        /* --- 5. TEXT OVER VIDEO (NEW INTRO TEXT) --- */
+        /* --- 5. TEXT OVER VIDEO (INTRO TEXT) --- */
         .text-over-video {
             position: absolute; 
             top: 55%;           
@@ -119,8 +115,8 @@
             transform: translate(-50%, -50%);
             z-index: 10;        
             color: white;
-            text-align: justify;
-            max-width: 80%; /* Added to keep text contained */
+            text-align: center; /* Changed from justify for better centering */
+            max-width: 80%;
         }
         .text-over-video h2 {
             font-size: 2em;
@@ -157,44 +153,97 @@
             height: 20px;
             margin-right: 10px;
         }
-        /* --- 7. CV Alignment Styles (New Section) --- */
+
+        /* --- 7. CV Alignment Styles (Used for Education/Experience) --- */
         .cv-item {
-            display: flex; /* Enables flexible alignment */
-            justify-content: space-between; /* Pushes content to the far left and far right */
-            width: 100%; /* Ensure the element uses the full available width */
-            margin-bottom: 5px; /* Add slight spacing between items */
+            display: flex;
+            justify-content: space-between;
+            max-width: 40em;
+            margin: 0 auto 5px auto; 
+            padding: 0 10px;
         }
-
-        /* Optional: Style for the dates to make them stand out or align better */
         .cv-date {
-            /* Ensures the date text doesn't wrap */
             white-space: nowrap; 
-            /* Optional: Make the date slightly less prominent */
             opacity: 0.8; 
+            text-align: right;
         }
-        /* --- 8. PUBLICATIONS LIST STYLE --- */
+
+        /* --- 8. PUBLICATIONS/ACTIVITIES LIST STYLE --- */
         .publications-list {
-            /* 1. Remove default left-side padding (the main culprit) */
-            padding-left: 0px; 
-
-            /* 2. Choose how the bullet point is positioned:
-                'inside' pulls the dot in line with the text block.
-                'outside' (default) pushes the dot out. */
-            list-style-position: inside;
-            
-            /* 3. Optional: Remove the default list margin for better spacing control */
-            margin: 0;
+            list-style-position: inside; 
+            padding-left: 10px; 
+            margin: 0 auto; 
+            max-width: 40em;
         }
 
-        /* Ensure the list items still have the desired color and spacing */
         .publications-list li {
             color: rgba(255, 255, 255, 0.75); 
             line-height: 1.6;
             margin-bottom: 15px; 
             text-align: justify;
-            /* This will slightly indent the text under the bullet point for better readability */
             padding-left: 10px; 
-            text-indent: -20px;
+            text-indent: -10px;
+        }
+
+        /* ======================================================= */
+        /* !!! MOBILE RESPONSIVENESS FIXES !!!            */
+        /* ======================================================= */
+
+        @media (max-width: 768px) {
+            
+            /* --- Glass Pane Overrides --- */
+            .glass-pane {
+                width: 90%; /* Wider fluid width */
+                height: 100px; 
+                top: 10%;
+            }
+            .glass-content h2 {
+                font-size: 8vw; /* Shrink header font relative to screen */
+            }
+            .glass-pane-left {
+                position: relative; /* Change sticky to relative for better flow */
+                width: 90%; /* Full width */
+                left: 50%;
+                top: 0;
+                transform: translate(-50%, 0);
+            }
+            
+            /* --- Intro Text Over Video --- */
+            .text-over-video {
+                top: 50%;
+                width: 95%;
+                padding: 0 10px;
+            }
+            .text-over-video h2 {
+                font-size: 1.5em;
+            }
+            .text-over-video p {
+                font-size: 1em;
+            }
+
+            /* --- Scrolling Content Adjustments --- */
+            .my-custom-text {
+                padding-top: 50px; /* Reduce the huge gap */
+            }
+            
+            /* --- CV Item Stacking (Education/Research) --- */
+            .cv-item {
+                display: block; /* Stacks institution and dates vertically */
+                text-align: left;
+                padding-bottom: 15px;
+            }
+            .cv-date {
+                display: block;
+                font-size: 0.9em;
+                margin-top: 2px;
+            }
+
+            /* --- List Adjustments (Publications/Activities) --- */
+            .publications-list li {
+                text-align: left; /* Remove justification to prevent ugly spacing on mobile */
+                text-indent: -15px; /* Adjust indent for smaller screens */
+                padding-left: 15px;
+            }
         }
     </style>
 </head>
