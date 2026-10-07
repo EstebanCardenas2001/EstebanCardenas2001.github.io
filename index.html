@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Esteban Cardenas - Portfolio</title>
+    <meta name="description" content="Esteban Cárdenas Andino: physicist and data scientist, Master's student in Physics of Data at the University of Padova. Research, projects and publications.">
+    <meta property="og:title" content="Esteban Cárdenas Andino · Physicist, Data Scientist">
+    <meta property="og:description" content="Master's student in Physics of Data at the University of Padova. Computational physics, machine learning and astrophysical data analysis.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="images/background-poster.jpg">
     <link rel="preload" href="assets/js/html2canvas.min.js" as="script">
     <link rel="preload" href="assets/js/liquidGL.js" as="script">
 
@@ -30,12 +35,12 @@
         /* --- 2. Glass Pane Styles (Made Fluid) --- */
         .glass-pane {
             position: fixed;
-            top: 15%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 80%; /* Fluid width */
             max-width: 900px; /* Maximum desktop size */
-            height: 130px;
+            height: 150px;
+            top: max(15%, 85px);
             z-index: 99;
             border-radius: 30px;
             display: flex;
@@ -187,6 +192,136 @@
             text-indent: -10px;
         }
 
+        /* --- 9. GLASS NAV MENU --- */
+        html {
+            scroll-behavior: smooth;
+        }
+        .glass-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 4px 18px;
+            margin-top: 8px;
+            user-select: none;
+            /* liquidGL disables pointer events on the glass element */
+            pointer-events: auto;
+        }
+        .glass-nav a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+        }
+        .glass-nav a:hover {
+            color: #ff9a4d;
+        }
+        .cv-section,
+        .site-footer {
+            scroll-margin-top: 220px;
+        }
+
+        /* --- 10. SECTIONS, PROJECTS AND SKILLS --- */
+        .cv-section {
+            max-width: 40em;
+            margin: 50px auto 0 auto;
+        }
+        .cv-section > h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .cv-entry {
+            margin-bottom: 22px;
+        }
+        .cv-item span:first-child {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
+        }
+        .cv-item em,
+        .project-sub {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .cv-bullets {
+            max-width: 40em;
+            margin: 6px auto 0 auto;
+            padding-left: 30px;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.6;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+        }
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 18px 20px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .project-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 140, 50, 0.6);
+        }
+        .project-card h3 {
+            font-size: 1.1em;
+            margin: 0 0 6px 0;
+        }
+        .my-custom-text .project-card p {
+            font-size: 0.95em;
+            margin: 0 0 10px 0;
+        }
+        .my-custom-text .project-card .project-sub {
+            font-size: 0.85em;
+            font-style: italic;
+        }
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .tags span {
+            font-size: 0.8em;
+            padding: 3px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.85);
+        }
+        .skill-group {
+            margin-bottom: 16px;
+        }
+        .skill-group h3 {
+            font-size: 1em;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+            color: rgba(255, 255, 255, 0.85);
+        }
+        .publications-list a,
+        .site-footer a {
+            color: #ff9a4d;
+        }
+        .site-footer {
+            max-width: 40em;
+            margin: 70px auto 0 auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95em;
+        }
+
         /* ======================================================= */
         /* !!! MOBILE RESPONSIVENESS FIXES !!!            */
         /* ======================================================= */
@@ -196,11 +331,25 @@
             /* --- Glass Pane Overrides --- */
             .glass-pane {
                 width: 90%; /* Wider fluid width */
-                height: 100px; 
-                top: 10%;
+                height: 130px;
+                top: max(10%, 75px);
             }
             .glass-content h2 {
                 font-size: 8vw; /* Shrink header font relative to screen */
+            }
+            .glass-content p {
+                font-size: 13px;
+            }
+            .glass-nav {
+                gap: 2px 12px;
+                margin-top: 6px;
+            }
+            .glass-nav a {
+                font-size: 12px;
+            }
+            .cv-section,
+            .site-footer {
+                scroll-margin-top: 170px;
             }
             .glass-pane-left {
                 position: relative; /* Change sticky to relative for better flow */
@@ -238,6 +387,7 @@
                 display: block;
                 font-size: 0.9em;
                 margin-top: 2px;
+                text-align: left;
             }
 
             /* --- List Adjustments (Publications/Activities) --- */
@@ -258,93 +408,214 @@
     
     <div class="text-over-video">
         <h2>Physicist, Data Scientist.</h2>
-        <p>I am currently expanding my capabilities as a physicist and data scientist through the Master's program in Physics of Data at the University of Padova. My core expertise lies in translating complex systems into robust, statistically-sound models, moving beyond simple data fitting to build predictive architectures grounded in physical principles. I focus on bridging the gap between fundamental physics and machine learning to extract deep, actionable insights from challenging datasets in a quest to understand and simulate the world around us.</p>
+        <p>Data physicist and computational scientist working on complex physical systems and scalable data engineering. I am currently pursuing a Master's in Physics of Data at the University of Padova, applying statistical mechanics, machine learning and high-performance computing to turn challenging datasets into robust, physically grounded models.</p>
 
-        <a href="https://github.com/EstebanCardenas2001" target="_blank" class="github-button">
-            <svg class="github-icon" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" fill="white" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2s.15.46.55.38c3.18-1.06 5.47-4.05 5.47-7.59C16 3.58 12.42 0 8 0z"></path></svg>
-            View My GitHub
-        </a>
+        <div class="hero-buttons">
+            <a href="https://github.com/EstebanCardenas2001" target="_blank" rel="noopener" class="github-button">
+                <svg class="github-icon" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" fill="white" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2s.15.46.55.38c3.18-1.06 5.47-4.05 5.47-7.59C16 3.58 12.42 0 8 0z"></path></svg>
+                View My GitHub
+            </a>
+            <a href="mailto:esteban.cardenas2001@gmail.com" class="github-button">
+                <svg class="github-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="white" d="M2 4h20v16H2V4zm2 2v.5l8 5 8-5V6H4zm16 2.85-8 5-8-5V18h16V8.85z"></path></svg>
+                Contact Me
+            </a>
+            <a href="Esteban_Cardenas_CV.pdf" download class="github-button">
+                <svg class="github-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="white" d="M11 3h2v9.17l3.59-3.58L18 10l-6 6-6-6 1.41-1.41L11 12.17V3zM4 19h16v2H4v-2z"></path></svg>
+                Download CV
+            </a>
+        </div>
     </div>
     <div class="glass-pane glass-effect">
         <div class="glass-content">
             <h2>Esteban Cardenas A.</h2>
-            <p>Master's student at University of Padova</p>
+            <p>Master's student in Physics of Data · University of Padova</p>
+            <nav class="glass-nav" aria-label="Sections">
+                <a href="#research">Research</a>
+                <a href="#projects">Projects</a>
+                <a href="#skills">Skills</a>
+                <a href="#publications">Publications</a>
+                <a href="#contact">Contact</a>
+            </nav>
         </div>
     </div>
-        
+
     <div class="my-custom-text">
         <div class="glass-pane-left glass-effect">
             <div class="glass-content">
                 <h2 style="font-size: 30px;">About Me</h2>
             </div>
         </div>
-        
-        <div class="education-section" style="max-width: 40em; margin: 0 auto; margin-top: 50px;">
-        <h2 style="font-size: 2em; margin-bottom: 20px;">Education</h2>
-        
-        <p class="cv-item">
-            <span>University of Padova - Master's in Physics of Data</span>
-            <span class="cv-date">Oct 2025 - Present</span>
-        </p>
 
-        <p class="cv-item">
-            <span>Escuela Politecnica Nacional - Bachelor's in Physics</span>
-            <span class="cv-date">June 2020 - Dec 2024</span>
-        </p>
-        </div>
-                <div class="research-experience" style="max-width: 40em; margin: 0 auto; margin-top: 50px;">
-        <h2 style="font-size: 2em; margin-bottom: 20px;">Research Experience</h2>
-        
-        <p class="cv-item">
-            <span>Condensed Matter Laboratory Internship <br> Escuela Politecnica Nacional</span>
-            <span class="cv-date">October 2022 - March 2023</span>
-        </p>
-        <br>
-        <p class="cv-item">
-            <span>Internship with J. Quirola <br> Radbound University Postdoctoral researcher </span>
-            <span class="cv-date">March 2024 - June 2024</span>
-        </p>
-                <br>
-        <p class="cv-item">
-            <span>Summer School in Statistics for Astronomers  <br> Center for Astrostatistics at Pensilvania State University </span>
-            <span class="cv-date">June 2024</span>
-        </p>
-                <br>
-        <p class="cv-item">
-            <span>Temporal estimators of peculiar GRBs  <br> Escuela Politecnica Nacional </span>
-            <span class="cv-date">November 2023 - Present</span>
-        </p>
-        </div>
-                <div class="publications" style="max-width: 40em; margin: 0 auto; margin-top: 50px;">
-    <h2 style="font-size: 2em; margin-bottom: 20px;">Publications and Presentations</h2>
-    
-    <ul class="publications-list">
-        <li>Noriega, N., Cárdenas, E. F., Chacón, J. A., Vásquez, N. (2024). Temporal Estimators of Peculiar GRBs. In Journal of Physics: Conference Series (Vol. 2796, Issue 1, p. 012001). IOP Publishing. https://doi.org/10.1088/1742-6596/2796/1/012001</li>
+        <section class="cv-section" id="education">
+            <h2>Education</h2>
 
-        <li>Poster presentation at the Physics meeting EPN, Quito, Temporal estimators of peculiar GRBs -- Nicolas A. Noriega, Esteban F. Cardenas, October 2023</li>
+            <div class="cv-entry">
+                <div class="cv-item">
+                    <span><strong>Università degli Studi di Padova</strong><br><em>Master's in Physics of Data</em></span>
+                    <span class="cv-date">Oct 2025 – Present<br>Padova, Italy</span>
+                </div>
+                <ul class="cv-bullets">
+                    <li>Specializing in computational physics, machine learning, stochastic processes and statistical mechanics of complex systems.</li>
+                </ul>
+            </div>
 
-        <li>Poster presentation at the XXXII IAU General Assembly, Cape Town, Unveiling the Enigmatic Nature of Peculiar Long GRBs in Swift’s Third Catalog -- Esteban F. Cardenas, August 2024 </li>
+            <div class="cv-entry">
+                <div class="cv-item">
+                    <span><strong>Escuela Politécnica Nacional</strong><br><em>Bachelor in Physics, Cum Laude</em></span>
+                    <span class="cv-date">Jun 2020 – Dec 2024<br>Quito, Ecuador</span>
+                </div>
+            </div>
+        </section>
 
-        <li>Second place at best poster Poster presentation at the CIF (International congress of physics) ESPOCH, Riobamba, Unveiling the Enigmatic Nature of Peculiar Long GRBs in Swift’s Third Catalog -- Esteban F. Cardenas, October 2024</li>
+        <section class="cv-section" id="research">
+            <h2>Research Experience</h2>
 
-        <li>Poster presentation at the ninth Colombian Meeting on High Energy Physics (9th ComHEP), Unveiling the Enigmatic Nature of Peculiar Long GRBs in Swift’s Third Catalog -- Esteban F. Cardenas, December 2024</li>
-    </ul>
-        </div>
-        <div class="activities" style="max-width: 40em; margin: 0 auto; margin-top: 50px;">
-            <h2 style="font-size: 2em; margin-bottom: 20px;">Extracurricular Activities</h2>
-            
+            <div class="cv-entry">
+                <div class="cv-item">
+                    <span><strong>Research, Temporal Estimators of Peculiar GRBs</strong><br><em>Escuela Politécnica Nacional</em></span>
+                    <span class="cv-date">Nov 2023 – Present<br>Quito, Ecuador</span>
+                </div>
+                <ul class="cv-bullets">
+                    <li>Built custom Python codebases to compute spectral and temporal parameters for large-scale astronomical datasets.</li>
+                    <li>Ran data analysis pipelines on transient phenomena using HEASoft and the Swift observatory database.</li>
+                </ul>
+            </div>
+
+            <div class="cv-entry">
+                <div class="cv-item">
+                    <span><strong>Data Analysis Intern (Astrophysics)</strong><br><em>Radboud University Postdoctoral Research / EPN</em></span>
+                    <span class="cv-date">Mar 2024 – Jun 2024<br>Quito, Ecuador</span>
+                </div>
+                <ul class="cv-bullets">
+                    <li>Applied statistical modeling to gamma-ray bursts and transient phenomena, identifying anomaly patterns in unstructured data.</li>
+                </ul>
+            </div>
+
+            <div class="cv-entry">
+                <div class="cv-item">
+                    <span><strong>Condensed Matter Laboratory Intern</strong><br><em>Escuela Politécnica Nacional</em></span>
+                    <span class="cv-date">Oct 2022 – Mar 2023<br>Quito, Ecuador</span>
+                </div>
+                <ul class="cv-bullets">
+                    <li>Synthesized and characterized graphene quantum dots via hydrothermal methods.</li>
+                    <li>Measured material properties using UV-VIS, FTIR and cyclic voltammetry.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="cv-section" id="projects">
+            <h2>Projects</h2>
+
+            <div class="project-grid">
+                <article class="project-card">
+                    <h3>EUV Phase Retrieval</h3>
+                    <p class="project-sub">Digital twin and U-Net surrogate for inverse optical phase retrieval</p>
+                    <p>PyTorch optical simulator with differentiable physics, Total Variation optimization and Monte Carlo uncertainty estimation.</p>
+                    <div class="tags"><span>Python</span><span>PyTorch</span></div>
+                </article>
+
+                <article class="project-card">
+                    <h3>Phase-Transition Dynamics in a 2D Lennard-Jones Fluid</h3>
+                    <p class="project-sub">Non-equilibrium thermodynamics simulation</p>
+                    <p>GPU-accelerated simulation showing spontaneous symmetry breaking and macroscopic droplet formation.</p>
+                    <div class="tags"><span>Python</span><span>PyTorch</span><span>CUDA</span></div>
+                </article>
+
+                <article class="project-card">
+                    <h3>High-Frequency Tick Data Wrangler</h3>
+                    <p class="project-sub">Statistical mechanics approach to market microstructure</p>
+                    <p>High-performance pipeline processing millions of raw cryptocurrency trades to extract predictive, low-noise signals.</p>
+                    <div class="tags"><span>Python</span><span>Jupyter</span></div>
+                </article>
+
+                <article class="project-card">
+                    <h3>Comparative Machine Learning Benchmarking</h3>
+                    <p class="project-sub">Laboratory of Computational Physics</p>
+                    <p>Benchmarked gradient boosting against neural networks on tabular and time-series activity recognition data, with Dockerized MySQL data management.</p>
+                    <div class="tags"><span>Python</span><span>PyTorch</span><span>Scikit-learn</span><span>Docker</span></div>
+                </article>
+
+                <article class="project-card">
+                    <h3>Streaming Processing of QUAX Experiment Data</h3>
+                    <p class="project-sub">Distributed live processing pipeline</p>
+                    <p>Distributed pipeline handling high-throughput experimental data for rapid downstream analysis.</p>
+                    <div class="tags"><span>Python</span><span>Jupyter</span></div>
+                </article>
+
+                <article class="project-card">
+                    <h3>Positron-Induced Muon Source</h3>
+                    <p class="project-sub">Monte Carlo simulation</p>
+                    <p>Monte Carlo model of unpolarized e<sup>+</sup>e<sup>−</sup> → μ<sup>+</sup>μ<sup>−</sup> scattering via a virtual photon mediator.</p>
+                    <div class="tags"><span>Python</span><span>Jupyter</span></div>
+                </article>
+
+                <article class="project-card">
+                    <h3>Custom 8-Bit Breadboard Computer</h3>
+                    <p class="project-sub">Logic-gate level system design</p>
+                    <p>Built and debugged an 8-bit computer based on Ben Eater's architecture, from RAM modules to control-word logic.</p>
+                    <div class="tags"><span>Electronics</span><span>Hardware</span></div>
+                </article>
+            </div>
+        </section>
+
+        <section class="cv-section" id="skills">
+            <h2>Technical Skills</h2>
+
+            <div class="skill-group">
+                <h3>Programming</h3>
+                <div class="tags"><span>Python</span><span>SQL</span><span>C++</span><span>Fortran</span><span>R</span></div>
+            </div>
+            <div class="skill-group">
+                <h3>Machine Learning &amp; Data Science</h3>
+                <div class="tags"><span>PyTorch</span><span>TensorFlow</span><span>Scikit-learn</span><span>Pandas</span><span>NumPy</span><span>SciPy</span><span>U-Net</span><span>Gradient Boosting</span></div>
+            </div>
+            <div class="skill-group">
+                <h3>Tools</h3>
+                <div class="tags"><span>Docker</span><span>Docker Compose</span><span>Git</span><span>Jupyter</span><span>MySQL</span><span>CUDA</span><span>HEASoft</span></div>
+            </div>
+            <div class="skill-group">
+                <h3>Domain Expertise</h3>
+                <div class="tags"><span>Monte Carlo Simulations</span><span>Time-Series Analysis</span><span>High-Frequency Data</span><span>Distributed Pipelines</span><span>Image / Phase Retrieval</span></div>
+            </div>
+            <div class="skill-group">
+                <h3>Languages</h3>
+                <div class="tags"><span>Spanish (Native)</span><span>English (Fluent)</span></div>
+            </div>
+        </section>
+
+        <section class="cv-section" id="publications">
+            <h2>Publications and Presentations</h2>
+
             <ul class="publications-list">
-                <li>Third place winner at Dorothy coding challenge (ICTP)</li>
-                <li>President of the association of physics students at Escuela Politecnica Nacional, January 2024 - January 2025</li>
-                <li>Member of the organization committee of the Physics meeting at Escuela Politecnica Nacional</li>
-                <li>Member of the organization committee of the IV workshop Astronomia en los Andes</li>
-                <li>Active member of the OPTICA student chapter</li>
-                <li>Second place at the IAPS PLANCKS national preliminaries</li>
+                <li><strong>Publication:</strong> Noriega, N., Cárdenas, E. F., Chacón, J. A., &amp; Vásquez, N. (2024). Temporal Estimators of Peculiar GRBs. <em>Journal of Physics: Conference Series</em>, 2796(1), 012001. <a href="https://doi.org/10.1088/1742-6596/2796/1/012001" target="_blank" rel="noopener">doi:10.1088/1742-6596/2796/1/012001</a></li>
+                <li><strong>Poster:</strong> 9th Colombian Meeting on High Energy Physics (ComHEP), <em>Unveiling the Enigmatic Nature of Peculiar Long GRBs in Swift's Third Catalog</em>, December 2024.</li>
+                <li><strong>Poster (2nd place, best poster):</strong> International Congress of Physics (CIF), ESPOCH, Riobamba, <em>Unveiling the Enigmatic Nature of Peculiar Long GRBs</em>, October 2024.</li>
+                <li><strong>Poster:</strong> XXXII IAU General Assembly, Cape Town, <em>Unveiling the Enigmatic Nature of Peculiar Long GRBs</em>, August 2024.</li>
+                <li><strong>Poster:</strong> Physics Meeting EPN, Quito, <em>Temporal Estimators of Peculiar GRBs</em>, October 2023.</li>
             </ul>
-        </div>
+        </section>
+
+        <section class="cv-section" id="leadership">
+            <h2>Leadership, Training and Awards</h2>
+
+            <ul class="publications-list">
+                <li><strong>Summer School in Statistics for Astronomers</strong>, Center for Astrostatistics, Pennsylvania State University (June 2024): intensive training in Bayesian and non-Bayesian statistical methods.</li>
+                <li><strong>President</strong> of the Association of Physics Students at Escuela Politécnica Nacional (Jan 2024 – Jan 2025).</li>
+                <li><strong>Organizing committee</strong> of the Physics Meeting at EPN and the IV Workshop <em>Astronomía en los Andes</em>.</li>
+                <li><strong>Awards:</strong> Third place, Dorothy Coding Challenge (ICTP); Second place, IAPS PLANCKS national preliminaries.</li>
+            </ul>
+        </section>
+
+        <footer class="site-footer" id="contact">
+            <a href="mailto:esteban.cardenas2001@gmail.com">esteban.cardenas2001@gmail.com</a>
+            <span>·</span>
+            <a href="https://github.com/EstebanCardenas2001" target="_blank" rel="noopener">GitHub</a>
+            <span>·</span>
+            <span>Padova, Italy</span>
+        </footer>
     </div>
 
-    
+
     <script src="assets/js/html2canvas.min.js" defer></script>
     
     <script src="assets/js/liquidGL.js" defer></script>
