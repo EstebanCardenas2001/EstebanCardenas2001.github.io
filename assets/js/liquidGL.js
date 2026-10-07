@@ -462,8 +462,8 @@
           }
           this.scaleFactor = Math.max(0.1, scale);
 
-          this.canvas.style.visibility = "hidden";
-          undos.push(() => (this.canvas.style.visibility = "visible"));
+          // The canvas is already left out by ignoreElements below, so it
+          // stays visible: hiding it made the glass blink on every recapture
 
           const lensElements = this.lenses
             .flatMap((lens) => [lens.el, lens._shadowEl])

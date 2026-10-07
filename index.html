@@ -47,6 +47,10 @@
             justify-content: center;
         }
 
+        .glass-pane-left .about-title {
+            font-size: 30px;
+        }
+
         .glass-pane-left {
             position: sticky;
             top: 30%;
@@ -264,19 +268,42 @@
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 16px;
         }
+        /* an opened card grows on its own, its neighbours keep their size */
+        .project-grid:has(.project-card[open]) {
+            align-items: start;
+        }
         .project-card {
-            position: relative;
-            display: flex;
-            flex-direction: column;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 20px;
-            padding: 18px 20px;
-            transition: transform 0.2s, border-color 0.2s;
+            overflow: hidden;
+            transition: border-color 0.2s, background-color 0.2s;
         }
-        .project-card:hover {
-            transform: translateY(-3px);
-            border-color: rgba(255, 140, 50, 0.6);
+        .project-card:hover,
+        .project-card[open] {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.07);
+        }
+        .project-card summary {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 18px 20px;
+            cursor: pointer;
+            list-style: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .project-card summary::-webkit-details-marker {
+            display: none;
+        }
+        .project-card summary:focus-visible {
+            outline: 2px solid rgba(255, 255, 255, 0.6);
+            outline-offset: -4px;
+            border-radius: 20px;
+        }
+        .project-head {
+            flex: 1;
+            min-width: 0;
         }
         .project-card h3 {
             font-size: 1.1em;
@@ -287,8 +314,28 @@
             margin: 0 0 10px 0;
         }
         .my-custom-text .project-card .project-sub {
+            display: block;
             font-size: 0.85em;
             font-style: italic;
+            margin: 0;
+        }
+        .project-chevron {
+            flex: none;
+            width: 22px;
+            height: 22px;
+            margin-top: 1px;
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.7);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform 0.3s ease;
+        }
+        .project-card[open] .project-chevron {
+            transform: rotate(180deg);
+        }
+        .project-body {
+            padding: 0 20px 18px;
         }
         .tags {
             display: flex;
@@ -304,23 +351,27 @@
             color: rgba(255, 255, 255, 0.85);
         }
         .project-link {
-            margin-top: auto;
-            padding-top: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 14px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
             font-size: 0.85em;
             font-weight: 600;
-            color: #ff9a4d;
             text-decoration: none;
+            transition: background-color 0.2s;
         }
-        /* Make the whole card clickable when it has a link */
-        .project-link::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: 20px;
-        }
-        .project-card:hover .project-link,
+        .project-link:hover,
         .project-link:focus-visible {
-            text-decoration: underline;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .project-link svg {
+            width: 16px;
+            height: 16px;
         }
         .skill-group {
             margin-bottom: 16px;
@@ -483,7 +534,8 @@
             }
             .cv-section,
             .site-footer {
-                scroll-margin-top: 130px;
+                /* clear the title box and the "About Me" pane under it */
+                scroll-margin-top: calc(var(--header-bottom, 112px) + 64px);
             }
 
             /* Hero: the video sits behind and the text flows below the header */
@@ -522,17 +574,21 @@
                 margin-right: 8px;
             }
 
-            /* "About Me" becomes a normal heading instead of a floating pane */
+            /* "About Me" stays just under the title box while scrolling,
+               like on desktop (--header-bottom is set by the script) */
             .glass-pane-left {
-                position: relative;
-                top: 0;
+                position: sticky;
+                top: calc(var(--header-bottom, 112px) + 8px);
                 left: 50%;
                 transform: translateX(-50%);
-                width: 220px;
-                height: 46px;
+                width: 200px;
+                height: 42px;
             }
             .glass-pane-left .glass-content {
                 position: static;
+            }
+            .glass-pane-left .about-title {
+                font-size: 24px;
             }
             .my-custom-text {
                 padding-top: 30px;
@@ -549,7 +605,7 @@
             }
             .cv-section,
             .site-footer {
-                scroll-margin-top: 100px;
+                scroll-margin-top: calc(var(--header-bottom, 95px) + 60px);
             }
         }
     </style>
@@ -599,7 +655,7 @@
     <div class="my-custom-text">
         <div class="glass-pane-left glass-effect glass-fallback">
             <div class="glass-content">
-                <h2 style="font-size: 30px;">About Me</h2>
+                <h2 class="about-title">About Me</h2>
             </div>
         </div>
 
@@ -664,59 +720,108 @@
             <h2>Projects</h2>
 
             <div class="project-grid">
-                <article class="project-card">
-                    <h3>EUV Phase Retrieval</h3>
-                    <p class="project-sub">Digital twin and U-Net surrogate for inverse optical phase retrieval</p>
-                    <p>PyTorch optical simulator with differentiable physics, Total Variation optimization and Monte Carlo uncertainty estimation.</p>
-                    <div class="tags"><span>Python</span><span>PyTorch</span></div>
-                    <a class="project-link" href="https://github.com/EstebanCardenas2001/EUV_phase_retrieval" target="_blank" rel="noopener">View code on GitHub <span aria-hidden="true">↗</span></a>
-                </article>
+                <details class="project-card">
+                    <summary>
+                        <span class="project-head">
+                            <h3>EUV Phase Retrieval</h3>
+                            <span class="project-sub">Digital twin and U-Net surrogate for inverse optical phase retrieval</span>
+                        </span>
+                        <svg class="project-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+                    </summary>
+                    <div class="project-body">
+                        <p>PyTorch optical simulator with differentiable physics, Total Variation optimization and Monte Carlo uncertainty estimation.</p>
+                        <div class="tags"><span>Python</span><span>PyTorch</span></div>
+                        <a class="project-link" href="https://github.com/EstebanCardenas2001/EUV_phase_retrieval" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="white" fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2s.15.46.55.38c3.18-1.06 5.47-4.05 5.47-7.59C16 3.58 12.42 0 8 0z"></path></svg>View code</a>
+                    </div>
+                </details>
 
-                <article class="project-card">
-                    <h3>Phase-Transition Dynamics in a 2D Lennard-Jones Fluid</h3>
-                    <p class="project-sub">Non-equilibrium thermodynamics simulation</p>
-                    <p>GPU-accelerated simulation showing spontaneous symmetry breaking and macroscopic droplet formation.</p>
-                    <div class="tags"><span>Python</span><span>PyTorch</span><span>CUDA</span></div>
-                    <a class="project-link" href="https://github.com/EstebanCardenas2001/Phase-Transition-Nucleation-Dynamics-in-a-2D-Lennard-Jones-Fluid" target="_blank" rel="noopener">View code on GitHub <span aria-hidden="true">↗</span></a>
-                </article>
+                <details class="project-card">
+                    <summary>
+                        <span class="project-head">
+                            <h3>Phase-Transition Dynamics in a 2D Lennard-Jones Fluid</h3>
+                            <span class="project-sub">Non-equilibrium thermodynamics simulation</span>
+                        </span>
+                        <svg class="project-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+                    </summary>
+                    <div class="project-body">
+                        <p>GPU-accelerated simulation showing spontaneous symmetry breaking and macroscopic droplet formation.</p>
+                        <div class="tags"><span>Python</span><span>PyTorch</span><span>CUDA</span></div>
+                        <a class="project-link" href="https://github.com/EstebanCardenas2001/Phase-Transition-Nucleation-Dynamics-in-a-2D-Lennard-Jones-Fluid" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="white" fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2s.15.46.55.38c3.18-1.06 5.47-4.05 5.47-7.59C16 3.58 12.42 0 8 0z"></path></svg>View code</a>
+                    </div>
+                </details>
 
-                <article class="project-card">
-                    <h3>High-Frequency Tick Data Wrangler</h3>
-                    <p class="project-sub">Statistical mechanics approach to market microstructure</p>
-                    <p>High-performance pipeline processing millions of raw cryptocurrency trades to extract predictive, low-noise signals.</p>
-                    <div class="tags"><span>Python</span><span>Jupyter</span></div>
-                    <a class="project-link" href="https://github.com/EstebanCardenas2001/High-Frequency-Tick-Data-Wrangler-A-Statistical-Mechanics-Approach-to-Market-Microstructure" target="_blank" rel="noopener">View code on GitHub <span aria-hidden="true">↗</span></a>
-                </article>
+                <details class="project-card">
+                    <summary>
+                        <span class="project-head">
+                            <h3>High-Frequency Tick Data Wrangler</h3>
+                            <span class="project-sub">Statistical mechanics approach to market microstructure</span>
+                        </span>
+                        <svg class="project-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+                    </summary>
+                    <div class="project-body">
+                        <p>High-performance pipeline processing millions of raw cryptocurrency trades to extract predictive, low-noise signals.</p>
+                        <div class="tags"><span>Python</span><span>Jupyter</span></div>
+                        <a class="project-link" href="https://github.com/EstebanCardenas2001/High-Frequency-Tick-Data-Wrangler-A-Statistical-Mechanics-Approach-to-Market-Microstructure" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="white" fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2s.15.46.55.38c3.18-1.06 5.47-4.05 5.47-7.59C16 3.58 12.42 0 8 0z"></path></svg>View code</a>
+                    </div>
+                </details>
 
-                <article class="project-card">
-                    <h3>Comparative Machine Learning Benchmarking</h3>
-                    <p class="project-sub">Laboratory of Computational Physics</p>
-                    <p>Benchmarked gradient boosting against neural networks on tabular and time-series activity recognition data, with Dockerized MySQL data management.</p>
-                    <div class="tags"><span>Python</span><span>PyTorch</span><span>Scikit-learn</span><span>Docker</span></div>
-                </article>
+                <details class="project-card">
+                    <summary>
+                        <span class="project-head">
+                            <h3>Comparative Machine Learning Benchmarking</h3>
+                            <span class="project-sub">Laboratory of Computational Physics</span>
+                        </span>
+                        <svg class="project-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+                    </summary>
+                    <div class="project-body">
+                        <p>Benchmarked gradient boosting against neural networks on tabular and time-series activity recognition data, with Dockerized MySQL data management.</p>
+                        <div class="tags"><span>Python</span><span>PyTorch</span><span>Scikit-learn</span><span>Docker</span></div>
+                    </div>
+                </details>
 
-                <article class="project-card">
-                    <h3>Streaming Processing of QUAX Experiment Data</h3>
-                    <p class="project-sub">Distributed live processing pipeline</p>
-                    <p>Distributed pipeline handling high-throughput experimental data for rapid downstream analysis.</p>
-                    <div class="tags"><span>Python</span><span>Jupyter</span></div>
-                    <a class="project-link" href="https://github.com/EstebanCardenas2001/Streaming-Processing-of-QUAX-Experiment-Data" target="_blank" rel="noopener">View code on GitHub <span aria-hidden="true">↗</span></a>
-                </article>
+                <details class="project-card">
+                    <summary>
+                        <span class="project-head">
+                            <h3>Streaming Processing of QUAX Experiment Data</h3>
+                            <span class="project-sub">Distributed live processing pipeline</span>
+                        </span>
+                        <svg class="project-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+                    </summary>
+                    <div class="project-body">
+                        <p>Distributed pipeline handling high-throughput experimental data for rapid downstream analysis.</p>
+                        <div class="tags"><span>Python</span><span>Jupyter</span></div>
+                        <a class="project-link" href="https://github.com/EstebanCardenas2001/Streaming-Processing-of-QUAX-Experiment-Data" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="white" fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2s.15.46.55.38c3.18-1.06 5.47-4.05 5.47-7.59C16 3.58 12.42 0 8 0z"></path></svg>View code</a>
+                    </div>
+                </details>
 
-                <article class="project-card">
-                    <h3>Positron-Induced Muon Source</h3>
-                    <p class="project-sub">Monte Carlo simulation</p>
-                    <p>Monte Carlo model of unpolarized e<sup>+</sup>e<sup>−</sup> → μ<sup>+</sup>μ<sup>−</sup> scattering via a virtual photon mediator.</p>
-                    <div class="tags"><span>Python</span><span>Jupyter</span></div>
-                    <a class="project-link" href="https://github.com/EstebanCardenas2001/Simulation-of-a-positron-induced-Muon-Source" target="_blank" rel="noopener">View code on GitHub <span aria-hidden="true">↗</span></a>
-                </article>
+                <details class="project-card">
+                    <summary>
+                        <span class="project-head">
+                            <h3>Positron-Induced Muon Source</h3>
+                            <span class="project-sub">Monte Carlo simulation</span>
+                        </span>
+                        <svg class="project-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+                    </summary>
+                    <div class="project-body">
+                        <p>Monte Carlo model of unpolarized e<sup>+</sup>e<sup>−</sup> → μ<sup>+</sup>μ<sup>−</sup> scattering via a virtual photon mediator.</p>
+                        <div class="tags"><span>Python</span><span>Jupyter</span></div>
+                        <a class="project-link" href="https://github.com/EstebanCardenas2001/Simulation-of-a-positron-induced-Muon-Source" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="white" fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2s.15.46.55.38c3.18-1.06 5.47-4.05 5.47-7.59C16 3.58 12.42 0 8 0z"></path></svg>View code</a>
+                    </div>
+                </details>
 
-                <article class="project-card">
-                    <h3>Custom 8-Bit Breadboard Computer</h3>
-                    <p class="project-sub">Logic-gate level system design</p>
-                    <p>Built and debugged an 8-bit computer based on Ben Eater's architecture, from RAM modules to control-word logic.</p>
-                    <div class="tags"><span>Electronics</span><span>Hardware</span></div>
-                </article>
+                <details class="project-card">
+                    <summary>
+                        <span class="project-head">
+                            <h3>Custom 8-Bit Breadboard Computer</h3>
+                            <span class="project-sub">Logic-gate level system design</span>
+                        </span>
+                        <svg class="project-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+                    </summary>
+                    <div class="project-body">
+                        <p>Built and debugged an 8-bit computer based on Ben Eater's architecture, from RAM modules to control-word logic.</p>
+                        <div class="tags"><span>Electronics</span><span>Hardware</span></div>
+                    </div>
+                </details>
             </div>
         </section>
 
@@ -810,7 +915,6 @@
                 const phoneOptions = isPhone ? {
                     maxDpr: 1.5,
                     videoFps: 15,
-                    recaptureOnHeightResize: false,
                     skipVideoInSnapshot: true,
                     // Keep the CSS glass until the WebGL glass fades in
                     on: { reveal: (lens) => lens.el.classList.remove("glass-fallback") }
@@ -847,10 +951,42 @@
             if (!video || !hero) return;
             video.style.height = isPhone ? hero.offsetHeight + "px" : "";
         }
+        // Lets "About Me" stick right under the title box on phones
+        const header = document.querySelector(".glass-pane");
+        function setHeaderBottom() {
+            document.documentElement.style.setProperty(
+                "--header-bottom", Math.round(header.getBoundingClientRect().bottom) + "px");
+        }
         if (isPhone) {
             fitVideo();
-            window.addEventListener("resize", fitVideo, { passive: true });
+            setHeaderBottom();
+            window.addEventListener("resize", () => { fitVideo(); setHeaderBottom(); }, { passive: true });
         }
+
+        // Project cards open and close with a short slide instead of a jump
+        const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        document.querySelectorAll(".project-card").forEach((card) => {
+            const summary = card.querySelector("summary");
+            const body = card.querySelector(".project-body");
+            summary.addEventListener("click", (e) => {
+                if (reduceMotion || !body.animate) return;
+                e.preventDefault();
+                if (card._anim) card._anim.cancel();
+                const opening = !card.open;
+                if (opening) card.open = true;
+                const full = body.scrollHeight;
+                body.style.overflow = "hidden";
+                card._anim = body.animate(
+                    { height: opening ? ["0px", full + "px"] : [full + "px", "0px"],
+                      opacity: opening ? [0, 1] : [1, 0] },
+                    { duration: 260, easing: "ease-out" });
+                card._anim.onfinish = () => {
+                    if (!opening) card.open = false;
+                    body.style.overflow = "";
+                    card._anim = null;
+                };
+            });
+        });
 
         window.addEventListener("load", () => {
             if ("requestIdleCallback" in window) requestIdleCallback(initGlass, { timeout: 2000 });
