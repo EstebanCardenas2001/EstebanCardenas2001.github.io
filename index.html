@@ -35,12 +35,12 @@
         /* --- 2. Glass Pane Styles (Made Fluid) --- */
         .glass-pane {
             position: fixed;
-            top: 15%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 80%; /* Fluid width */
             max-width: 900px; /* Maximum desktop size */
-            height: 130px;
+            height: 150px;
+            top: max(15%, 85px);
             z-index: 99;
             border-radius: 30px;
             display: flex;
@@ -192,7 +192,37 @@
             text-indent: -10px;
         }
 
-        /* --- 9. SECTIONS, PROJECTS AND SKILLS --- */
+        /* --- 9. GLASS NAV MENU --- */
+        html {
+            scroll-behavior: smooth;
+        }
+        .glass-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 4px 18px;
+            margin-top: 8px;
+            user-select: none;
+            /* liquidGL disables pointer events on the glass element */
+            pointer-events: auto;
+        }
+        .glass-nav a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+        }
+        .glass-nav a:hover {
+            color: #ff9a4d;
+        }
+        .cv-section,
+        .site-footer {
+            scroll-margin-top: 220px;
+        }
+
+        /* --- 10. SECTIONS, PROJECTS AND SKILLS --- */
         .cv-section {
             max-width: 40em;
             margin: 50px auto 0 auto;
@@ -301,14 +331,25 @@
             /* --- Glass Pane Overrides --- */
             .glass-pane {
                 width: 90%; /* Wider fluid width */
-                height: 100px; 
-                top: 10%;
+                height: 130px;
+                top: max(10%, 75px);
             }
             .glass-content h2 {
                 font-size: 8vw; /* Shrink header font relative to screen */
             }
             .glass-content p {
                 font-size: 13px;
+            }
+            .glass-nav {
+                gap: 2px 12px;
+                margin-top: 6px;
+            }
+            .glass-nav a {
+                font-size: 12px;
+            }
+            .cv-section,
+            .site-footer {
+                scroll-margin-top: 170px;
             }
             .glass-pane-left {
                 position: relative; /* Change sticky to relative for better flow */
@@ -378,12 +419,23 @@
                 <svg class="github-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="white" d="M2 4h20v16H2V4zm2 2v.5l8 5 8-5V6H4zm16 2.85-8 5-8-5V18h16V8.85z"></path></svg>
                 Contact Me
             </a>
+            <a href="Esteban_Cardenas_CV.pdf" download class="github-button">
+                <svg class="github-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="white" d="M11 3h2v9.17l3.59-3.58L18 10l-6 6-6-6 1.41-1.41L11 12.17V3zM4 19h16v2H4v-2z"></path></svg>
+                Download CV
+            </a>
         </div>
     </div>
     <div class="glass-pane glass-effect">
         <div class="glass-content">
             <h2>Esteban Cardenas A.</h2>
             <p>Master's student in Physics of Data · University of Padova</p>
+            <nav class="glass-nav" aria-label="Sections">
+                <a href="#research">Research</a>
+                <a href="#projects">Projects</a>
+                <a href="#skills">Skills</a>
+                <a href="#publications">Publications</a>
+                <a href="#contact">Contact</a>
+            </nav>
         </div>
     </div>
 
@@ -394,7 +446,7 @@
             </div>
         </div>
 
-        <section class="cv-section">
+        <section class="cv-section" id="education">
             <h2>Education</h2>
 
             <div class="cv-entry">
@@ -415,7 +467,7 @@
             </div>
         </section>
 
-        <section class="cv-section">
+        <section class="cv-section" id="research">
             <h2>Research Experience</h2>
 
             <div class="cv-entry">
@@ -451,7 +503,7 @@
             </div>
         </section>
 
-        <section class="cv-section">
+        <section class="cv-section" id="projects">
             <h2>Projects</h2>
 
             <div class="project-grid">
@@ -506,7 +558,7 @@
             </div>
         </section>
 
-        <section class="cv-section">
+        <section class="cv-section" id="skills">
             <h2>Technical Skills</h2>
 
             <div class="skill-group">
@@ -531,7 +583,7 @@
             </div>
         </section>
 
-        <section class="cv-section">
+        <section class="cv-section" id="publications">
             <h2>Publications and Presentations</h2>
 
             <ul class="publications-list">
@@ -543,7 +595,7 @@
             </ul>
         </section>
 
-        <section class="cv-section">
+        <section class="cv-section" id="leadership">
             <h2>Leadership, Training and Awards</h2>
 
             <ul class="publications-list">
@@ -554,7 +606,7 @@
             </ul>
         </section>
 
-        <footer class="site-footer">
+        <footer class="site-footer" id="contact">
             <a href="mailto:esteban.cardenas2001@gmail.com">esteban.cardenas2001@gmail.com</a>
             <span>·</span>
             <a href="https://github.com/EstebanCardenas2001" target="_blank" rel="noopener">GitHub</a>
