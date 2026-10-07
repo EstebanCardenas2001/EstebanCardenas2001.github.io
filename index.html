@@ -10,6 +10,15 @@
     <meta property="og:type" content="website">
     <meta property="og:image" content="images/background-poster.jpg">
     <link rel="icon" href="data:,">
+    <script>
+        // Always open at the top with the video: don't restore the last
+        // scroll position or jump to a #section left in the address bar
+        if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+        if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+        addEventListener("pageshow", (e) => {
+            if (e.persisted) scrollTo({ top: 0, behavior: "instant" });
+        });
+    </script>
 
     <style>
         /* --- 1. Background Style --- */
