@@ -9,8 +9,7 @@
     <meta property="og:description" content="Master's student in Physics of Data at the University of Padova. Computational physics, machine learning and astrophysical data analysis.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="images/background-poster.jpg">
-    <link rel="preload" href="assets/js/html2canvas.min.js" as="script">
-    <link rel="preload" href="assets/js/liquidGL.js" as="script">
+    <link rel="icon" href="data:,">
 
     <style>
         /* --- 1. Background Style --- */
@@ -62,6 +61,11 @@
             justify-content: center;
         }
 
+
+        /* Light tint shown until the WebGL glass effect has loaded */
+        .glass-fallback {
+            background: rgba(255, 255, 255, 0.07);
+        }
 
         /* --- 3. Glass Content Style (Made Fluid) --- */
         .glass-content {
@@ -425,7 +429,7 @@
             </a>
         </div>
     </div>
-    <div class="glass-pane glass-effect">
+    <div class="glass-pane glass-effect glass-fallback">
         <div class="glass-content">
             <h2>Esteban Cardenas A.</h2>
             <p>Master's student in Physics of Data · University of Padova</p>
@@ -440,7 +444,7 @@
     </div>
 
     <div class="my-custom-text">
-        <div class="glass-pane-left glass-effect">
+        <div class="glass-pane-left glass-effect glass-fallback">
             <div class="glass-content">
                 <h2 style="font-size: 30px;">About Me</h2>
             </div>
@@ -616,23 +620,36 @@
     </div>
 
 
-    <script src="assets/js/html2canvas.min.js" defer></script>
-    
-    <script src="assets/js/liquidGL.js" defer></script>
-    
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // Pause the background video while it is scrolled out of view
-            const video = document.querySelector(".background-video");
-            if (video && "IntersectionObserver" in window) {
-                new IntersectionObserver(([entry]) => {
-                    if (entry.isIntersecting) video.play().catch(() => {});
-                    else video.pause();
-                }).observe(video);
-            }
+        // Pause the background video while it is scrolled out of view
+        const video = document.querySelector(".background-video");
+        if (video && "IntersectionObserver" in window) {
+            new IntersectionObserver(([entry]) => {
+                if (entry.isIntersecting) video.play().catch(() => {});
+                else video.pause();
+            }).observe(video);
+        }
 
-            try {
-                const glassEffect = liquidGL({
+        // The glass effect snapshots the whole page, which is heavy, so it
+        // loads only after the page is visible and the browser is idle
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const s = document.createElement("script");
+                s.src = src;
+                s.onload = resolve;
+                s.onerror = reject;
+                document.head.appendChild(s);
+            });
+        }
+
+        function initGlass() {
+            Promise.all([
+                loadScript("assets/js/html2canvas.min.js"),
+                loadScript("assets/js/liquidGL.js")
+            ]).then(() => {
+                const panes = document.querySelectorAll(".glass-fallback");
+                panes.forEach((el) => el.classList.remove("glass-fallback"));
+                liquidGL({
                     target: ".glass-effect", 
                     snapshot: "body",
                     resolution: 1.0,
@@ -643,11 +660,15 @@
                     shadow: true,
                     tilt: false,
                     tiltFactor: 5,
-                    magnify: 1.5
+                    magnify: 1.5,
+                    hideUntilReady: false
                 });
-            } catch (e) {
-                console.error("liquidGL Error:", e);
-            }
+            }).catch((e) => console.error("liquidGL Error:", e));
+        }
+
+        window.addEventListener("load", () => {
+            if ("requestIdleCallback" in window) requestIdleCallback(initGlass, { timeout: 2000 });
+            else setTimeout(initGlass, 200);
         });
     </script>
 
