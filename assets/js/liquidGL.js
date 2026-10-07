@@ -70,7 +70,19 @@
    *  Shared renderer (one per page)
    * ------------------------------------------------*/
   class liquidGLRenderer {
-    constructor(snapshotSelector, snapshotResolution = 1.0) {
+    constructor(snapshotSelector, snapshotResolution = 1.0, opts = {}) {
+      // Phone tuning (defaults keep the original behaviour)
+      this._maxDpr = opts.maxDpr || 2;
+      this._videoFrameInterval = opts.videoFps ? 1000 / opts.videoFps : 0;
+      this._lastVideoUpload = 0;
+      this._recaptureOnHeightResize = opts.recaptureOnHeightResize !== false;
+      this._skipVideoInSnapshot = !!opts.skipVideoInSnapshot;
+      // Set before the first captureSnapshot() call below, which used to
+      // run with an undefined resolution and produce no texture
+      this._snapshotResolution = Math.max(
+        0.1,
+        Math.min(3.0, snapshotResolution)
+      );
       this.canvas = document.createElement("canvas");
       this.canvas.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;`;
       this.canvas.setAttribute("data-liquid-ignore", "");
@@ -124,6 +136,20 @@
           return;
         }
 
+        // Keep the existing page snapshot when the page itself has not
+        // changed size (e.g. the ResizeObserver's first callback). On phones
+        // the address bar slides in and out while scrolling, which only
+        // changes the height, so there only the width is compared.
+        if (
+          innerWidth === this._snapW &&
+          (!this._recaptureOnHeightResize ||
+            this.snapshotTarget.scrollHeight === this._snapH)
+        ) {
+          this._resizeCanvas();
+          this.lenses.forEach((l) => l.updateMetrics());
+          return;
+        }
+
         this._dynamicNodes.forEach((node) => {
           const meta = this._dynMeta.get(node.el);
           if (meta) {
@@ -171,11 +197,6 @@
       this._tmpCtx = this._tmpCanvas.getContext("2d");
 
       this.canvas.style.opacity = "0";
-
-      this._snapshotResolution = Math.max(
-        0.1,
-        Math.min(3.0, snapshotResolution)
-      );
 
       this.useExternalTicker = false;
 
@@ -400,7 +421,7 @@
 
     /* ----------------------------- */
     _resizeCanvas() {
-      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const dpr = Math.min(this._maxDpr, window.devicePixelRatio || 1);
       this.canvas.width = innerWidth * dpr;
       this.canvas.height = innerHeight * dpr;
       this.canvas.style.width = `${innerWidth}px`;
@@ -423,6 +444,8 @@
         try {
           const fullW = this.snapshotTarget.scrollWidth;
           const fullH = this.snapshotTarget.scrollHeight;
+          this._snapW = innerWidth;
+          this._snapH = fullH;
           const maxTex = this.gl.getParameter(this.gl.MAX_TEXTURE_SIZE) || 8192;
           const MAX_MOBILE_DIM = 4096;
           const isMobileSafari = /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -449,6 +472,11 @@
           const ignoreElementsFunc = (element) => {
             if (!element || !element.hasAttribute) return false;
             if (element === this.canvas || lensElements.includes(element)) {
+              return true;
+            }
+            // Video frames are drawn into the snapshot live, so copying the
+            // video while cloning the page is wasted work
+            if (this._skipVideoInSnapshot && element.tagName === "VIDEO") {
               return true;
             }
             const style = window.getComputedStyle(element);
@@ -615,7 +643,7 @@
         }
       });
 
-      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const dpr = Math.min(this._maxDpr, window.devicePixelRatio || 1);
       this.lenses.forEach((ln) => {
         if (ln._mirrorActive && ln.rectPx) {
           const { left, top, width, height } = ln.rectPx;
@@ -650,7 +678,7 @@
       const rect = lens.rectPx;
       if (!rect) return;
 
-      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const dpr = Math.min(this._maxDpr, window.devicePixelRatio || 1);
 
       let overscrollY = 0;
       let overscrollX = 0;
@@ -724,6 +752,11 @@
     /* ----------------------------- */
     _updateDynamicVideos() {
       if (this._isScrolling && this._scrollUpdateCounter % 2 !== 0) return;
+      if (this._videoFrameInterval) {
+        const now = performance.now();
+        if (now - this._lastVideoUpload < this._videoFrameInterval) return;
+        this._lastVideoUpload = now;
+      }
       if (
         !this.texture ||
         !this.staticSnapshotCanvas ||
@@ -1451,7 +1484,7 @@
       const maxAllowedCss = Math.min(rect.width, rect.height) * 0.5;
       this.radiusCss = Math.min(brPx, maxAllowedCss);
 
-      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const dpr = Math.min(this.renderer._maxDpr, window.devicePixelRatio || 1);
       this.radiusGl = this.radiusCss * dpr;
 
       if (this._shadowSyncFn) {
@@ -1584,6 +1617,9 @@
 
     /* ----------------------------- */
     _reveal() {
+      if (this.options.on && this.options.on.reveal) {
+        this.options.on.reveal(this);
+      }
       if (this.revealTypeIndex === 0) {
         this.el.style.opacity = this.originalOpacity || 1;
         this.renderer.canvas.style.opacity = "1";
@@ -1989,7 +2025,11 @@
 
     let renderer = window.__liquidGLRenderer__;
     if (!renderer) {
-      renderer = new liquidGLRenderer(options.snapshot, options.resolution);
+      renderer = new liquidGLRenderer(
+        options.snapshot,
+        options.resolution,
+        options
+      );
       window.__liquidGLRenderer__ = renderer;
     }
 
