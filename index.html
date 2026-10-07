@@ -534,8 +534,7 @@
             }
             .cv-section,
             .site-footer {
-                /* clear the title box and the "About Me" pane under it */
-                scroll-margin-top: calc(var(--header-bottom, 112px) + 64px);
+                scroll-margin-top: calc(var(--header-bottom, 112px) + 16px);
             }
 
             /* Hero: the video sits behind and the text flows below the header */
@@ -554,7 +553,7 @@
                 min-height: 100vh;
                 min-height: 100svh;
                 margin: 0 auto;
-                padding: calc(var(--header-bottom, 112px) + 70px) 20px 40px;
+                padding: calc(var(--header-bottom, 112px) + 20px) 20px 40px;
                 box-sizing: border-box;
                 display: flex;
                 flex-direction: column;
@@ -574,23 +573,10 @@
                 margin-right: 8px;
             }
 
-            /* "About Me" is pinned just under the title box. A pane that moves
-               on screen makes the WebGL glass trail a frame behind it while
-               scrolling (very visible on iPhone); a pinned one never moves.
-               --header-bottom is set by the script. */
+            /* No "About Me" pane on phones (removed by the script too, so
+               the glass effect doesn't track it) */
             .glass-pane-left {
-                position: fixed;
-                top: calc(var(--header-bottom, 112px) + 8px);
-                left: 50%;
-                transform: translateX(-50%);
-                width: 200px;
-                height: 42px;
-            }
-            .glass-pane-left .glass-content {
-                position: static;
-            }
-            .glass-pane-left .about-title {
-                font-size: 24px;
+                display: none;
             }
             .my-custom-text {
                 padding-top: 30px;
@@ -603,11 +589,11 @@
                 display: none;
             }
             .text-over-video {
-                padding-top: calc(var(--header-bottom, 95px) + 60px);
+                padding-top: calc(var(--header-bottom, 95px) + 10px);
             }
             .cv-section,
             .site-footer {
-                scroll-margin-top: calc(var(--header-bottom, 95px) + 60px);
+                scroll-margin-top: calc(var(--header-bottom, 95px) + 12px);
             }
         }
     </style>
@@ -953,7 +939,11 @@
             if (!video || !hero) return;
             video.style.height = isPhone ? hero.offsetHeight + "px" : "";
         }
-        // Lets "About Me" stick right under the title box on phones
+        // Phones have no "About Me" pane; drop it before the glass effect
+        // starts so it isn't tracked as a lens
+        if (isPhone) document.querySelector(".glass-pane-left")?.remove();
+
+        // Where the title box ends, used to space content below it on phones
         const header = document.querySelector(".glass-pane");
         function setHeaderBottom() {
             document.documentElement.style.setProperty(
