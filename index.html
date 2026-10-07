@@ -411,6 +411,79 @@
             font-size: 0.95em;
         }
 
+        /* --- 11. TYPOGRAPHY: Times New Roman --- */
+        /* Liberation Serif and Tinos have the same letter widths as Times
+           New Roman, for devices that don't ship it (Linux, ChromeOS) */
+        body {
+            font-family: "Times New Roman", Times, "Liberation Serif", Tinos, serif;
+            /* a serif reads smaller than a sans at the same size */
+            font-size: 18px;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+        h2,
+        h3 {
+            font-weight: 400;
+            letter-spacing: 0.01em;
+        }
+        .glass-content h2 {
+            font-weight: 400;
+            letter-spacing: 0.03em;
+        }
+        .glass-content p {
+            font-size: 17px;
+            font-style: italic;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+        }
+        .glass-nav a {
+            color: rgba(255, 255, 255, 0.92);
+            font-size: 18px;
+            font-weight: 400;
+            font-variant-caps: all-small-caps;
+            letter-spacing: 0.12em;
+        }
+        .text-over-video h2 {
+            font-size: 2.4em;
+            font-style: italic;
+            margin-bottom: 0.4em;
+        }
+        .text-over-video p {
+            font-size: 1.15em;
+            line-height: 1.55;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .github-button {
+            font-weight: 400;
+            font-size: 1em;
+            letter-spacing: 0.03em;
+        }
+        .cv-section > h2 {
+            font-size: 2.1em;
+            padding-bottom: 0.25em;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .my-custom-text p {
+            font-size: 1em;
+        }
+        .cv-date {
+            font-variant-numeric: tabular-nums;
+        }
+        .project-card h3 {
+            font-size: 1.2em;
+            font-weight: 700;
+        }
+        .skill-group h3 {
+            font-size: 1.05em;
+            font-style: italic;
+            font-weight: 400;
+        }
+        .tags span,
+        .project-link {
+            font-weight: 400;
+            letter-spacing: 0.02em;
+        }
+
         /* ======================================================= */
         /* !!! MOBILE RESPONSIVENESS FIXES !!!            */
         /* ======================================================= */
@@ -589,6 +662,27 @@
             }
             .my-custom-text {
                 padding-top: 30px;
+            }
+
+            /* Times New Roman sizes for small screens */
+            body {
+                font-size: 17px;
+            }
+            .glass-content p {
+                font-size: 13px;
+            }
+            .glass-nav a {
+                font-size: clamp(14px, 4.1vw, 16px);
+                letter-spacing: 0.06em;
+            }
+            .text-over-video h2 {
+                font-size: 1.8em;
+            }
+            .text-over-video p {
+                font-size: 1.05em;
+            }
+            .cv-section > h2 {
+                font-size: 1.8em;
             }
         }
 
