@@ -261,6 +261,9 @@
             gap: 16px;
         }
         .project-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 20px;
@@ -295,6 +298,25 @@
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: rgba(255, 255, 255, 0.85);
+        }
+        .project-link {
+            margin-top: auto;
+            padding-top: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+            color: #ff9a4d;
+            text-decoration: none;
+        }
+        /* Make the whole card clickable when it has a link */
+        .project-link::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+        }
+        .project-card:hover .project-link,
+        .project-link:focus-visible {
+            text-decoration: underline;
         }
         .skill-group {
             margin-bottom: 16px;
@@ -512,6 +534,7 @@
                     <p class="project-sub">Digital twin and U-Net surrogate for inverse optical phase retrieval</p>
                     <p>PyTorch optical simulator with differentiable physics, Total Variation optimization and Monte Carlo uncertainty estimation.</p>
                     <div class="tags"><span>Python</span><span>PyTorch</span></div>
+                    <a class="project-link" href="https://github.com/EstebanCardenas2001/EUV_phase_retrieval" target="_blank" rel="noopener">View code on GitHub <span aria-hidden="true">↗</span></a>
                 </article>
 
                 <article class="project-card">
@@ -519,6 +542,7 @@
                     <p class="project-sub">Non-equilibrium thermodynamics simulation</p>
                     <p>GPU-accelerated simulation showing spontaneous symmetry breaking and macroscopic droplet formation.</p>
                     <div class="tags"><span>Python</span><span>PyTorch</span><span>CUDA</span></div>
+                    <a class="project-link" href="https://github.com/EstebanCardenas2001/Phase-Transition-Nucleation-Dynamics-in-a-2D-Lennard-Jones-Fluid" target="_blank" rel="noopener">View code on GitHub <span aria-hidden="true">↗</span></a>
                 </article>
 
                 <article class="project-card">
@@ -526,6 +550,7 @@
                     <p class="project-sub">Statistical mechanics approach to market microstructure</p>
                     <p>High-performance pipeline processing millions of raw cryptocurrency trades to extract predictive, low-noise signals.</p>
                     <div class="tags"><span>Python</span><span>Jupyter</span></div>
+                    <a class="project-link" href="https://github.com/EstebanCardenas2001/High-Frequency-Tick-Data-Wrangler-A-Statistical-Mechanics-Approach-to-Market-Microstructure" target="_blank" rel="noopener">View code on GitHub <span aria-hidden="true">↗</span></a>
                 </article>
 
                 <article class="project-card">
@@ -540,6 +565,7 @@
                     <p class="project-sub">Distributed live processing pipeline</p>
                     <p>Distributed pipeline handling high-throughput experimental data for rapid downstream analysis.</p>
                     <div class="tags"><span>Python</span><span>Jupyter</span></div>
+                    <a class="project-link" href="https://github.com/EstebanCardenas2001/Streaming-Processing-of-QUAX-Experiment-Data" target="_blank" rel="noopener">View code on GitHub <span aria-hidden="true">↗</span></a>
                 </article>
 
                 <article class="project-card">
@@ -547,6 +573,7 @@
                     <p class="project-sub">Monte Carlo simulation</p>
                     <p>Monte Carlo model of unpolarized e<sup>+</sup>e<sup>−</sup> → μ<sup>+</sup>μ<sup>−</sup> scattering via a virtual photon mediator.</p>
                     <div class="tags"><span>Python</span><span>Jupyter</span></div>
+                    <a class="project-link" href="https://github.com/EstebanCardenas2001/Simulation-of-a-positron-induced-Muon-Source" target="_blank" rel="noopener">View code on GitHub <span aria-hidden="true">↗</span></a>
                 </article>
 
                 <article class="project-card">
