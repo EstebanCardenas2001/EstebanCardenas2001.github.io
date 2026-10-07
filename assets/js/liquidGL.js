@@ -471,6 +471,7 @@
             scrollX: 0,
             scrollY: 0,
             scale: scale,
+            logging: false,
             ignoreElements: ignoreElementsFunc,
           });
 
@@ -1385,7 +1386,8 @@
       this.originalOpacity = this.el.style.opacity;
       this.originalTransition = this.el.style.transition;
       this.el.style.transition = "none";
-      this.el.style.opacity = 0;
+      this._hideContent = this.options.hideUntilReady !== false;
+      if (this._hideContent) this.el.style.opacity = 0;
 
       this.el.style.position =
         this.el.style.position === "static"
@@ -1602,7 +1604,9 @@
 
         this.renderer.lenses.forEach((ln) => {
           ln._revealProgress = progress;
-          ln.el.style.opacity = (ln.originalOpacity || 1) * progress;
+          if (ln._hideContent) {
+            ln.el.style.opacity = (ln.originalOpacity || 1) * progress;
+          }
           if (ln._shadowEl) {
             ln._shadowEl.style.opacity = progress;
           }
