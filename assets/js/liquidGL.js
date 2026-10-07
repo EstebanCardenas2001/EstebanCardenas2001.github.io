@@ -743,6 +743,16 @@
         if (this._isIgnored(vid) || vid.readyState < 2) return;
 
         const rect = vid.getBoundingClientRect();
+
+        // Skip off-screen videos and frames that were already uploaded
+        if (rect.bottom <= 0 || rect.top >= innerHeight) return;
+        if (
+          vid._lgLastTime === vid.currentTime &&
+          vid._lgLastSnap === this.staticSnapshotCanvas
+        )
+          return;
+        vid._lgLastTime = vid.currentTime;
+        vid._lgLastSnap = this.staticSnapshotCanvas;
         const texX = (rect.left - snapRect.left) * this.scaleFactor;
         const texY = (rect.top - snapRect.top) * this.scaleFactor;
         const texW = rect.width * this.scaleFactor;

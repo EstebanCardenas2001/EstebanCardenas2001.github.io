@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Esteban Cardenas - Portfolio</title>
+    <link rel="preload" href="assets/js/html2canvas.min.js" as="script">
+    <link rel="preload" href="assets/js/liquidGL.js" as="script">
 
     <style>
         /* --- 1. Background Style --- */
@@ -249,7 +251,8 @@
 </head>
 <body>
     
-    <video class="background-video" autoplay loop muted playsinline>
+    <video class="background-video" autoplay loop muted playsinline preload="auto" poster="images/background-poster.jpg">
+        <source src="images/background-video.webm" type="video/webm">
         <source src="images/background-video.mp4" type="video/mp4">
     </video>
     
@@ -348,10 +351,20 @@
     
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            // Pause the background video while it is scrolled out of view
+            const video = document.querySelector(".background-video");
+            if (video && "IntersectionObserver" in window) {
+                new IntersectionObserver(([entry]) => {
+                    if (entry.isIntersecting) video.play().catch(() => {});
+                    else video.pause();
+                }).observe(video);
+            }
+
             try {
                 const glassEffect = liquidGL({
                     target: ".glass-effect", 
                     snapshot: "body",
+                    resolution: 1.0,
                     frost: 1.5,
                     bevelDepth: 0.2,
                     bevelWidth: 0.2,
